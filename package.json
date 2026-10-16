@@ -1,0 +1,16 @@
+{
+  "name": "local-lead-kit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tools for a done-for-you website + lead capture service for local businesses",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "prospect": "node prospector/index.mjs",
+    "gen": "node site-template/gen.mjs",
+    "lead-api:dev": "node lead-api/dev-server.mjs",
+    "test": "node --test"
+  }
+}
