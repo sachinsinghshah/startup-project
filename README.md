@@ -22,6 +22,8 @@ Sources: [BLS/CB Insights roundup](https://www.demandsage.com/?p=7938), [indie r
 | `site-template/` | Generates a fast, mobile-first demo site from a JSON config in about 5 minutes. Lighthouse mobile: 100 performance, 100 accessibility, 100 SEO. |
 | `lead-api/` | One endpoint for all client sites. It emails (and optionally texts) the owner each lead, and schedules a Google-review request to the customer N days later. |
 | `outreach/` | Demo-first cold email sequence, Loom script, pricing, objection handling, and a tracker CSV. |
+| `operations/` | **How to deliver**: who owns and pays for domains, launching on a client's existing domain without breaking their email, Google Business Profile/Search Console access, what "SEO" includes, the service agreement, onboarding and offboarding. |
+| `clients/` + `tools/` | One JSON file per client as the single source of truth (site content, lead routing, domain, Google access, billing). `npm run clients` shows status and warnings; `npm run clients -- build` regenerates the lead API config and every site. |
 
 No dependencies; requires Node 20+.
 
@@ -36,14 +38,20 @@ npx netlify-cli deploy --dir dist/joes-plumbing           # free preview URL to 
 # 3. Run the lead API locally (dry run prints the emails instead of sending)
 npm run lead-api:dev
 
+# 4. Manage paying clients: one file per client in clients/ (copy clients/_template.json)
+npm run clients              # status, renewals due, missing access, monthly revenue
+npm run clients -- build     # regenerates lead-api/clients.json + builds every client site
+
 npm test
 ```
+
+Before your first client, read `operations/delivery-playbook.md` and use `operations/client-onboarding.md` for each new client. **Keep this repo private**, because client files contain contact details. Passwords never go in it.
 
 ### Going live with the lead API (free tiers)
 1. Create a [Resend](https://resend.com) account (free tier) and verify your sending domain.
 2. Deploy `lead-api/` as its own Netlify site (`cd lead-api && npx netlify-cli deploy --prod`).
    Set the env vars `RESEND_API_KEY` and `FROM_EMAIL`. For SMS, also set `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` and `TWILIO_FROM`, and bill the SMS cost to the client.
-3. Add each paying client to `lead-api/clients.json` (owner email/phone, Google review link) and redeploy.
+3. Add each client as `clients/<id>.json`, run `npm run clients -- build`, then redeploy the lead API.
 4. Set `leadEndpoint` in the client's site config to `https://<your-lead-api>.netlify.app/api/lead`.
 
 ## 30-day plan

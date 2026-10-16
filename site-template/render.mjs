@@ -12,6 +12,7 @@ export function validateConfig(c) {
   const missing = REQUIRED.filter(k => !c[k] || (Array.isArray(c[k]) && !c[k].length));
   if (missing.length) throw new Error(`config missing: ${missing.join(', ')}`);
   if (c.brandColor && !/^#[0-9a-f]{3,8}$/i.test(c.brandColor)) throw new Error('brandColor must be a hex color like #0b6bcb');
+  if (c.siteUrl && !/^https:\/\/[a-z0-9.-]+(\/[\w./-]*)?$/i.test(c.siteUrl)) throw new Error('siteUrl must be a plain https:// URL like https://www.example.com');
 }
 
 export function render(template, c) {
@@ -42,6 +43,7 @@ export function render(template, c) {
     year: new Date().getFullYear(),
     jsonLd,
     leadEndpointJson: JSON.stringify(c.leadEndpoint || '/api/lead').replace(/</g, '\\u003c'),
+    canonicalHtml: c.siteUrl ? `<link rel="canonical" href="${esc(c.siteUrl.replace(/\/+$/, ''))}/">` : '',
     addressHtml: c.address ? ` · ${esc(c.address)}` : '',
     badgesHtml: (c.badges || ['Licensed & insured', 'Free estimates', 'Local & family-run'])
       .map(b => `<li>${esc(b)}</li>`).join(''),
