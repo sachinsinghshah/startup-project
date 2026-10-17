@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { parseCsv, toCsv } from '../prospector/csv.mjs';
 import { checkHtml, scoreAudit, normalizeUrl } from '../prospector/audit.mjs';
 import { render, slugify } from '../site-template/render.mjs';
-import { validateLead, buildEmails, handleLead } from '../lead-api/handle-lead.mjs';
+import { validateLead, buildReviewEmail, handleLead, handleReview } from '../lead-api/handle-lead.mjs';
 
 test('csv round-trips quotes, commas and newlines', () => {
   const rows = [{ a: 'x, "y"', b: 'line1\nline2' }];
@@ -37,29 +37,61 @@ test('render fills every placeholder and escapes HTML', async () => {
 
 test('slugify', () => assert.equal(slugify('Riverside Plumbing Co.'), 'riverside-plumbing-co'));
 
-const clients = { acme: { name: 'Acme', ownerEmail: 'o@acme.test', reviewUrl: 'https://g.page/r/x/review', reviewDelayDays: 3 } };
+const clients = { acme: { name: 'Acme', ownerEmail: 'o@acme.test', reviewUrl: 'https://g.page/r/x/review', reviewDelayDays: 0 } };
+const env = { LINK_SECRET: 'test-secret', PUBLIC_URL: 'https://leads.example/' };
+const jane = { businessId: 'acme', name: 'Jane Doe', phone: '555', email: 'j@x.test', message: 'leak' };
 
 test('validateLead rejects bad input and catches the honeypot', () => {
   assert.equal(validateLead({ businessId: 'nope', name: 'a', phone: '1' }, clients).error, 'unknown businessId');
+  assert.equal(validateLead({ businessId: 'toString', name: 'a', phone: '1' }, clients).error, 'unknown businessId');
   assert.match(validateLead({ businessId: 'acme', name: 'a' }, clients).error, /required/);
   assert.equal(validateLead({ businessId: 'acme', company_website: 'spam' }, clients).spam, true);
 });
 
-test('buildEmails alerts the owner and schedules the review request', () => {
-  const now = new Date('2026-01-01T00:00:00Z');
-  const emails = buildEmails(clients.acme, { name: 'Jane Doe', phone: '555', email: 'j@x.test', message: 'leak' }, { from: 'f@x.test', now });
-  assert.equal(emails.length, 2);
-  assert.deepEqual(emails[0].to, ['o@acme.test']);
-  assert.equal(emails[1].scheduled_at, '2026-01-04T00:00:00.000Z');
-  assert.equal(buildEmails(clients.acme, { name: 'J', phone: '5', email: '', message: '' }, { from: 'f' }).length, 1);
-});
-
-test('handleLead dry-runs without an API key', async () => {
-  const logs = [];
-  const out = await handleLead({ businessId: 'acme', name: 'Jane', phone: '555', email: 'j@x.test', message: 'hi' },
-    { clients, env: {}, log: (...a) => logs.push(a) });
+test('a lead emails only the owner, with a signed review link, never the customer', async () => {
+  const sent = [];
+  const out = await handleLead(jane, { clients, env: { ...env, BCC_EMAIL: 'me@agency.test' }, log: (_, json) => sent.push(JSON.parse(json)) });
   assert.equal(out.status, 200);
   assert.equal(out.body.dryRun, true);
-  assert.equal(out.body.scheduledReview, true);
-  assert.equal(logs.length, 1);
+  assert.equal(sent.length, 1);
+  assert.deepEqual(sent[0].to, ['o@acme.test']);
+  assert.deepEqual(sent[0].bcc, ['me@agency.test']);
+  assert.match(sent[0].text, /https:\/\/leads\.example\/api\/review\?t=[\w-]+\.[\w-]+/);
+});
+
+test('no review link without LINK_SECRET or customer email', async () => {
+  const sent = [];
+  const log = (_, json) => sent.push(JSON.parse(json));
+  await handleLead(jane, { clients, env: {}, log });
+  await handleLead({ ...jane, email: '' }, { clients, env, log });
+  assert.ok(sent.every(e => !e.text.includes('/api/review')));
+});
+
+test('review link: GET asks for confirmation, POST sends to the customer, tampering fails', async () => {
+  const sent = [];
+  await handleLead(jane, { clients, env, log: (_, json) => sent.push(JSON.parse(json)) });
+  const token = sent[0].text.match(/\?t=([\w.-]+)/)[1];
+  const opts = { clients, env, log: (_, json) => sent.push(JSON.parse(json)) };
+
+  const get = await handleReview('GET', token, opts);
+  assert.equal(get.status, 200);
+  assert.match(get.html, /j@x\.test/);
+  assert.equal(sent.length, 1, 'GET must not send');
+
+  const post = await handleReview('POST', token, opts);
+  assert.equal(post.status, 200);
+  assert.deepEqual(sent[1].to, ['j@x.test']);
+  assert.match(sent[1].text, /g\.page\/r\/x\/review/);
+  assert.equal(sent[1].scheduled_at, undefined);
+
+  const forged = token.slice(0, -2) + (token.endsWith('AA') ? 'BB' : 'AA');
+  assert.equal((await handleReview('POST', forged, opts)).status, 400);
+  const late = new Date(Date.now() + 200 * 86400000);
+  assert.equal((await handleReview('POST', token, { ...opts, now: late })).status, 400);
+});
+
+test('review email can be delayed per client', () => {
+  const now = new Date('2026-01-01T00:00:00Z');
+  const e = buildReviewEmail({ ...clients.acme, reviewDelayDays: 2 }, { name: 'Jane', email: 'j@x.test' }, { from: 'f', now });
+  assert.equal(e.scheduled_at, '2026-01-03T00:00:00.000Z');
 });

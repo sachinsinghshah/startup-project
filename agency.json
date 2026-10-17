@@ -1,0 +1,11 @@
+{
+  "agencyName": "YOUR STUDIO NAME",
+  "yourName": "YOUR NAME",
+  "yourEmail": "you@yourstudio.com",
+  "leadApiUrl": "https://YOUR-LEAD-API.netlify.app",
+  "currency": "USD",
+  "packages": {
+    "starter": { "setupFee": 500, "monthly": 99 },
+    "growth": { "setupFee": 900, "monthly": 179 }
+  }
+}

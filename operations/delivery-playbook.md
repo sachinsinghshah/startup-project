@@ -74,7 +74,7 @@ Be concrete. Clients don't understand "SEO" and get angry when results aren't in
 | Fast, mobile-friendly site with correct titles and meta descriptions, plus LocalBusiness schema (the generator does this) | A page per service and per town (e.g. "Water heater repair in Round Rock"), at $X per page |
 | GBP fully completed: categories, services, hours, photos, area served | Monthly GBP posts, photo uploads |
 | Matching name, address and phone (NAP) across the top directories (Yelp, Bing Places, Apple Business Connect, Facebook) | Citations on niche directories |
-| Automatic review requests after each job (the lead API does this) | Replying to every review on their behalf |
+| One-click review requests: every lead alert has a "job done, ask for a review" link; the owner clicks it after the job | Replying to every review on their behalf |
 | Search Console set up, sitemap submitted, monthly check for errors | Blog or content writing, link building |
 
 **Never promise rankings or a position.** Promise the work ("we'll publish 4 service pages and get you 10+ new reviews this quarter") and report on it monthly.

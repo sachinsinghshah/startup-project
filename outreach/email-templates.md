@@ -18,7 +18,7 @@ I was looking for a {{niche}} in {{City}} on my phone and found {{Business}}. Yo
 
 So I built you a new version. Here it is: {{demo_link}}
 
-It loads instantly on phones, has a one-tap call button, and sends quote requests straight to your phone and inbox. It also asks happy customers for a Google review automatically.
+It loads instantly on phones, has a one-tap call button, and sends quote requests straight to your phone and inbox. After each job, one click asks the customer for a Google review.
 
 If you like it, I can put it live on your domain this week for {{$setup}} plus {{$monthly}}/month for hosting, edits and the lead alerts. If not, no worries; the preview is yours to keep looking at.
 
@@ -64,10 +64,10 @@ Hi {{FirstName}}, I'll take {{Business}}'s preview down on Friday unless you wan
 
 | Package | Setup | Monthly | Includes |
 |---|---|---|---|
-| Starter | $500 | $99 | Site, quote form, email lead alerts, hosting, 30 min of edits a month |
-| Growth | $900 | $179 | Starter + SMS alerts + automatic Google review requests + monthly lead report |
+| Starter | $500 | $99 | Site, quote form, email lead alerts, one-click Google review requests, Google Business Profile set up, hosting, 30 min of edits a month, monthly report |
+| Growth | $900 | $179 | Starter + SMS lead alerts + a monthly Google Business Profile post + replies to their Google reviews |
 
-Take payment with **Stripe Payment Links** (no monthly fee): one link for the setup fee and one for the subscription. Get paid *before* you put the site live on their domain.
+Take payment with **Stripe Payment Links** (no monthly fee): one link for the setup fee and one for the subscription. If you're in India, see `GUIDE.md` §0 for alternatives. Get paid *before* you put the site live on their domain.
 
 ## Phone objections
 

@@ -12,6 +12,7 @@
     "gen": "node site-template/gen.mjs",
     "lead-api:dev": "node lead-api/dev-server.mjs",
     "clients": "node tools/clients.mjs",
+    "new-client": "node tools/new-client.mjs",
     "test": "node --test"
   }
 }

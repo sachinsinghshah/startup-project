@@ -1,0 +1,22 @@
+{
+  "name": "Brightline Web Studio",
+  "tagline": "Websites that win local jobs",
+  "city": "your city",
+  "serviceArea": "local service businesses in the US, UK and Europe",
+  "phone": "+1 (555) 555-0100",
+  "brandColor": "#0b6bcb",
+  "schemaType": "ProfessionalService",
+  "siteUrl": "https://www.yourstudio.com",
+  "headline": "Fast websites that turn Google searches into booked jobs.",
+  "subheadline": "Done-for-you websites with instant lead alerts and automatic Google review requests, for plumbers, HVAC, roofers, dentists and other local businesses. Live in a week.",
+  "responseTime": "1 business day",
+  "leadEndpoint": "https://YOUR-LEAD-API.netlify.app/api/lead",
+  "badges": ["Live in 7 days", "Month-to-month, no contract", "You own your domain & Google profile"],
+  "services": [
+    { "title": "Mobile-first website", "text": "Loads in under a second, one-tap calling, built to convert visitors into calls." },
+    { "title": "Instant lead alerts", "text": "Every enquiry goes to your phone and inbox within seconds." },
+    { "title": "More Google reviews", "text": "One click after a job sends your customer a friendly review request." },
+    { "title": "Google Business Profile care", "text": "We keep your listing complete, current and active every month." }
+  ],
+  "testimonials": []
+}

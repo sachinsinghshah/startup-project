@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Usage: npm run prospect -- prospector/sample-businesses.csv [--out leads.csv] [--psi]
-// Input CSV columns: name, website, city (optional: phone, email, niche)
+// Input CSV columns: name, website, city, phone (optional: email, niche)
 // Set PSI_API_KEY for higher PageSpeed Insights quota (free key from Google Cloud).
 import { readFile, writeFile } from 'node:fs/promises';
 import { parseCsv, toCsv } from './csv.mjs';

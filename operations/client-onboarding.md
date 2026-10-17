@@ -4,14 +4,14 @@ Copy this into your notes for each new client. It takes about 2–5 days, mostly
 
 ## Day 0: they said yes
 - [ ] Agreement signed (see `delivery-playbook.md` §5)
-- [ ] Setup fee paid (Stripe Payment Link) and monthly subscription started
-- [ ] Copy `clients/_template.json` to `clients/<id>.json`, fill in contact and plan, set `status: "onboarding"`
+- [ ] Setup fee paid (Stripe Payment Link, or a Skydo/Wise/Payoneer invoice) and the monthly billing set up from the go-live date
+- [ ] Their demo file `clients/<id>.json` already exists: set `status: "onboarding"`, fill in `contact`, `plan.package`, `plan.startDate` and `plan.billingRef`. (No demo? Use `npm run new-client` or copy `clients/_template.json`.)
 - [ ] Send the **onboarding email** below
 
 ## Collect from the client
 - [ ] Logo (if any), 5–10 real photos of their work/team/van, list of services, service area, opening hours
 - [ ] Google review link (GBP → *Ask for reviews* → copy link) → `lead.reviewUrl`
-- [ ] Where leads should go: email and mobile number → `lead.ownerEmail`, `lead.ownerPhone`
+- [ ] Where leads should go: email and mobile number → **replace your own email** in `lead.ownerEmail` (demos route to you) with theirs, and fill in `lead.ownerPhone`
 - [ ] Domain: do they have one? Which registrar? Do they use email on it?
 - [ ] Access invites accepted:
   - [ ] Google Business Profile → Manager
@@ -32,7 +32,7 @@ Copy this into your notes for each new client. It takes about 2–5 days, mostly
 - [ ] Search Console: submit the sitemap and request indexing of the homepage
 - [ ] GBP: set the website field to the new URL, complete categories, services, hours and photos
 - [ ] Set `status: "active"`, `site.liveUrl`, `domain.renewalDate` in their client file and commit
-- [ ] Send the "you're live" email with what happens next and when the first monthly report arrives
+- [ ] Send the "you're live" email: what happens next, when the first monthly report arrives, and **how the review link works** (in every lead email, click "ask for a review" after finishing the job)
 
 ---
 

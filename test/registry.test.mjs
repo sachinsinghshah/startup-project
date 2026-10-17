@@ -64,3 +64,18 @@ test('writeSite adds robots.txt and sitemap.xml when siteUrl is set', async () =
   assert.match(await readFile(join(dir, 'robots.txt'), 'utf8'), /Sitemap: https:\/\/www\.acme\.test\/sitemap\.xml/);
   assert.throws(() => render('x', { ...cfg, siteUrl: 'javascript:alert(1)' }), /siteUrl/);
 });
+
+test('buildClient makes a valid demo client that routes demo leads to you', async () => {
+  const { buildClient } = await import('../tools/new-client.mjs');
+  const agency = { yourEmail: 'me@studio.test', leadApiUrl: 'https://leads.example/', currency: 'GBP', packages: { starter: { setupFee: 400, monthly: 89 } } };
+  const c = buildClient({ name: "Joe's Plumbing", city: 'Leeds, UK', phone: '0113 496 0000', niche: 'plumber', website: 'https://www.joesplumbing.test/home' }, agency);
+  assert.equal(c.id, 'joes-plumbing-leeds');
+  assert.equal(c.domain.name, 'joesplumbing.test');
+  assert.equal(c.site.leadEndpoint, 'https://leads.example/api/lead');
+  assert.equal(c.lead.ownerEmail, 'me@studio.test');
+  assert.equal(c.plan.currency, 'GBP');
+  assert.match(c.site.headline, /Leeds\./);
+  assert.deepEqual(checkClient(c, now).errors, []);
+  const tpl = await readFile(new URL('../site-template/template.html', import.meta.url), 'utf8');
+  assert.ok(render(tpl, siteConfig(c)).includes("Joe&#39;s Plumbing"));
+});

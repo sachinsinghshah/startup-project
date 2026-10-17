@@ -49,7 +49,7 @@ export function leadApiClients(clients) {
       ownerEmail: c.lead.ownerEmail,
       ownerPhone: c.lead.ownerPhone || '',
       reviewUrl: c.lead.reviewUrl && !c.lead.reviewUrl.includes('REPLACE') ? c.lead.reviewUrl : '',
-      reviewDelayDays: c.lead.reviewDelayDays ?? 3,
+      reviewDelayDays: c.lead.reviewDelayDays ?? 0,
     }]));
 }
 

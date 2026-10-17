@@ -58,6 +58,6 @@
     "ownerEmail": "owner@example.com",
     "ownerPhone": "",
     "reviewUrl": "https://g.page/r/REPLACE_WITH_GOOGLE_REVIEW_LINK/review",
-    "reviewDelayDays": 3
+    "reviewDelayDays": 0
   }
 }
