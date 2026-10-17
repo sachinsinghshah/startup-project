@@ -4,6 +4,6 @@
     "ownerEmail": "owner@example.com",
     "ownerPhone": "",
     "reviewUrl": "",
-    "reviewDelayDays": 3
+    "reviewDelayDays": 0
   }
 }
