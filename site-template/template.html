@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{name}} | {{tagline}} in {{city}}</title>
+<meta name="description" content="{{name}}: {{tagline}} in {{city}} and surrounding areas. Call {{phone}} for a free quote.">
+{{canonicalHtml}}
+<script type="application/ld+json">{{jsonLd}}</script>
+<style>
+  :root { --brand: {{brandColor}}; --ink: #1a1d21; --muted: #5b6470; --bg: #ffffff; --soft: #f4f6f8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--bg); }
+  a { color: var(--brand); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid #e5e8eb; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
+  .logo { font-weight: 800; font-size: 19px; color: var(--ink); text-decoration: none; }
+  .btn { display: inline-block; background: var(--brand); color: #fff; text-decoration: none; font-weight: 700; padding: 12px 20px; border-radius: 8px; border: 0; font-size: 16px; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--brand); border: 2px solid var(--brand); }
+  .hero { padding: 56px 0 40px; background: var(--soft); }
+  .hero h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; margin: 0 0 12px; }
+  .hero p { color: var(--muted); font-size: 19px; max-width: 620px; margin: 0 0 24px; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; color: var(--muted); font-size: 15px; padding: 0; list-style: none; }
+  .badges li::before { content: "✓ "; color: var(--brand); font-weight: 700; }
+  section { padding: 48px 0; }
+  h2 { font-size: 28px; margin: 0 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .card { background: var(--soft); border-radius: 12px; padding: 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 19px; }
+  .card p { margin: 0; color: var(--muted); }
+  blockquote { margin: 0; }
+  .quote-form { background: var(--soft); border-radius: 12px; padding: 24px; display: grid; gap: 12px; max-width: 560px; }
+  label { font-weight: 600; font-size: 15px; display: grid; gap: 4px; }
+  input, textarea, select { font: inherit; padding: 11px 12px; border: 1px solid #c9ced4; border-radius: 8px; width: 100%; background: #fff; }
+  .hp { position: absolute; left: -9999px; }
+  #form-status { font-weight: 600; min-height: 1.5em; }
+  footer { background: var(--ink); color: #c9ced4; padding: 32px 0; font-size: 15px; }
+  footer a { color: #fff; }
+  .callbar { display: none; }
+  @media (max-width: 640px) {
+    header .btn { display: none; }
+    .callbar { display: block; position: fixed; bottom: 0; left: 0; right: 0; padding: 10px 16px; background: var(--bg); box-shadow: 0 -2px 10px rgba(0,0,0,.08); z-index: 20; }
+    .callbar .btn { display: block; text-align: center; }
+    body { padding-bottom: 72px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#">{{name}}</a>
+    <a class="btn" href="tel:{{phoneDigits}}">Call {{phone}}</a>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <h1>{{headline}}</h1>
+      <p>{{subheadline}}</p>
+      <div class="cta">
+        <a class="btn" href="#quote">Get a free quote</a>
+        <a class="btn ghost" href="tel:{{phoneDigits}}">Call {{phone}}</a>
+      </div>
+      <ul class="badges">{{badgesHtml}}</ul>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>Services</h2>
+      <div class="grid">{{servicesHtml}}</div>
+    </div>
+  </section>
+
+  <section style="background: var(--soft)">
+    <div class="wrap">
+      <h2>What customers say</h2>
+      <div class="grid">{{testimonialsHtml}}</div>
+    </div>
+  </section>
+
+  <section id="quote">
+    <div class="wrap">
+      <h2>Get a free quote</h2>
+      <p style="color: var(--muted); margin-top: -8px">We usually reply within {{responseTime}}.</p>
+      <form class="quote-form" id="quote-form">
+        <input type="hidden" name="businessId" value="{{businessId}}">
+        <label class="hp" aria-hidden="true">Leave blank <input name="company_website" tabindex="-1" autocomplete="off"></label>
+        <label>Name <input name="name" required autocomplete="name"></label>
+        <label>Phone <input name="phone" type="tel" required autocomplete="tel"></label>
+        <label>Email <input name="email" type="email" autocomplete="email"></label>
+        <label>What do you need? <textarea name="message" rows="4" required></textarea></label>
+        <button class="btn" type="submit">Send request</button>
+        <div id="form-status" role="status"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>{{name}}</strong>, serving {{serviceArea}}.<br>
+    <a href="tel:{{phoneDigits}}">{{phone}}</a>{{addressHtml}}<br>
+    © {{year}} {{name}}
+  </div>
+</footer>
+
+<div class="callbar"><a class="btn" href="tel:{{phoneDigits}}">Call now: {{phone}}</a></div>
+
+<script>
+  const form = document.getElementById('quote-form');
+  const status = document.getElementById('form-status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    status.textContent = 'Sending…';
+    try {
+      const res = await fetch({{leadEndpointJson}}, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      status.textContent = 'Thanks! We got your request and will call you shortly.';
+    } catch {
+      status.textContent = 'Something went wrong. Please call us on {{phone}}.';
+    }
+  });
+</script>
+</body>
+</html>

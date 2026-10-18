@@ -1,0 +1,63 @@
+{
+  "id": "riverside-plumbing-co",
+  "status": "demo",
+  "contact": { "name": "Sample Owner", "email": "owner@example.com", "phone": "(512) 555-0142" },
+  "plan": {
+    "package": "growth",
+    "setupFee": 900,
+    "monthly": 179,
+    "currency": "USD",
+    "startDate": "",
+    "billingRef": ""
+  },
+  "domain": {
+    "name": "riversideplumbing.example",
+    "ownedBy": "client",
+    "registrar": "GoDaddy",
+    "renewalDate": "",
+    "renewalPaidBy": "client",
+    "dnsAccess": "none",
+    "emailOnDomain": true,
+    "dnsBackupTaken": false,
+    "notes": "Sample client. Uses Google Workspace MX records; do not touch them."
+  },
+  "access": {
+    "gbp": "requested",
+    "gsc": "none",
+    "ga4": "none",
+    "vaultRef": "",
+    "notes": ""
+  },
+  "site": {
+    "name": "Riverside Plumbing Co.",
+    "tagline": "Emergency plumbers",
+    "city": "Austin, TX",
+    "serviceArea": "Austin, Round Rock and Cedar Park",
+    "phone": "(512) 555-0142",
+    "brandColor": "#0b6bcb",
+    "schemaType": "Plumber",
+    "siteUrl": "https://www.riversideplumbing.example",
+    "liveUrl": "",
+    "headline": "Leaking pipe? A plumber at your door in 60 minutes.",
+    "subheadline": "Licensed Austin plumbers, available 24/7. Upfront prices before we start work.",
+    "responseTime": "15 minutes",
+    "leadEndpoint": "http://localhost:8787/api/lead",
+    "badges": ["Licensed & insured", "24/7 emergency service", "Upfront pricing", "4.9★ on Google"],
+    "services": [
+      { "title": "Emergency repairs", "text": "Burst pipes, leaks and overflowing toilets, fixed fast, day or night." },
+      { "title": "Water heaters", "text": "Repair and same-day replacement for tank and tankless units." },
+      { "title": "Drain cleaning", "text": "Clogged sinks, showers and main lines cleared with camera inspection." },
+      { "title": "Repiping", "text": "Whole-home PEX and copper repipes with clean drywall patching." }
+    ],
+    "testimonials": [
+      { "text": "Came out at 11pm for a burst pipe and had it fixed in an hour. Fair price too.", "author": "Sample review" },
+      { "text": "Replaced our water heater the same day we called. Very professional.", "author": "Sample review" }
+    ]
+  },
+  "lead": {
+    "ownerEmail": "owner@example.com",
+    "ownerPhone": "",
+    "reviewUrl": "https://g.page/r/REPLACE_WITH_GOOGLE_REVIEW_LINK/review",
+    "reviewDelayDays": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Riverside Plumbing Co.",
+  "tagline": "Emergency plumbers",
+  "city": "Austin, TX",
+  "serviceArea": "Austin, Round Rock and Cedar Park",
+  "phone": "(512) 555-0142",
+  "brandColor": "#0b6bcb",
+  "schemaType": "Plumber",
+  "headline": "Leaking pipe? A plumber at your door in 60 minutes.",
+  "subheadline": "Licensed Austin plumbers, available 24/7. Upfront prices before we start work.",
+  "responseTime": "15 minutes",
+  "leadEndpoint": "http://localhost:8787/api/lead",
+  "badges": ["Licensed & insured", "24/7 emergency service", "Upfront pricing", "4.9★ on Google"],
+  "services": [
+    { "title": "Emergency repairs", "text": "Burst pipes, leaks and overflowing toilets, fixed fast, day or night." },
+    { "title": "Water heaters", "text": "Repair and same-day replacement for tank and tankless units." },
+    { "title": "Drain cleaning", "text": "Clogged sinks, showers and main lines cleared with camera inspection." },
+    { "title": "Repiping", "text": "Whole-home PEX and copper repipes with clean drywall patching." }
+  ],
+  "testimonials": [
+    { "text": "Came out at 11pm for a burst pipe and had it fixed in an hour. Fair price too.", "author": "Sample review" },
+    { "text": "Replaced our water heater the same day we called. Very professional.", "author": "Sample review" }
+  ]
+}

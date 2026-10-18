@@ -1,0 +1,51 @@
+{
+  "id": "business-name-city",
+  "status": "prospect",
+  "contact": { "name": "", "email": "", "phone": "" },
+  "plan": {
+    "package": "starter",
+    "setupFee": 500,
+    "monthly": 99,
+    "currency": "USD",
+    "startDate": "",
+    "billingRef": "Stripe subscription id or Payment Link"
+  },
+  "domain": {
+    "name": "",
+    "ownedBy": "client",
+    "registrar": "",
+    "renewalDate": "",
+    "renewalPaidBy": "client",
+    "dnsAccess": "none",
+    "emailOnDomain": null,
+    "dnsBackupTaken": false,
+    "notes": "ownedBy: client|us-for-client. dnsAccess: delegated|client-adds-records|none. Record MX/TXT details here before changing DNS."
+  },
+  "access": {
+    "gbp": "none",
+    "gsc": "none",
+    "ga4": "none",
+    "vaultRef": "Password-manager entry name. Never put passwords in this file.",
+    "notes": "gbp: manager|owner|none|requested. gsc: owner|full|none. ga4: admin|editor|none."
+  },
+  "site": {
+    "name": "",
+    "tagline": "",
+    "city": "",
+    "serviceArea": "",
+    "phone": "",
+    "brandColor": "#0b6bcb",
+    "schemaType": "LocalBusiness",
+    "siteUrl": "",
+    "liveUrl": "",
+    "leadEndpoint": "https://YOUR-LEAD-API.netlify.app/api/lead",
+    "services": [],
+    "testimonials": []
+  },
+  "lead": {
+    "ownerEmail": "",
+    "ownerPhone": "",
+    "reviewUrl": "",
+    "reviewDelayDays": 0
+  }
+}
