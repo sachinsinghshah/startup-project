@@ -3,3 +3,4 @@ dist/
 leads.csv
 .env
 .netlify/
+my-leads*.csv

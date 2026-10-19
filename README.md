@@ -20,7 +20,7 @@ Sources: [BLS/CB Insights roundup](https://www.demandsage.com/?p=7938), [indie r
 
 | Folder | What it does |
 |---|---|
-| `prospector/` | Audits a CSV of businesses (HTTPS, mobile viewport, form, tap-to-call, stale copyright, optional PageSpeed score). Writes `leads.csv` with the worst sites first. |
+| `prospector/` | `find-leads` pulls businesses (name, phone, website, rating) from the Google Places API. `prospect` audits a CSV of businesses (HTTPS, mobile viewport, form, tap-to-call, stale copyright, optional PageSpeed score). Writes `leads.csv` with the worst sites first. |
 | `site-template/` | Generates a fast, mobile-first demo site from a JSON config in about 5 minutes. Lighthouse mobile: 100 performance, 100 accessibility, 100 SEO. |
 | `lead-api/` | One endpoint for all client sites. It emails (and optionally texts) the owner each lead, BCCs you a copy, and includes a signed "job done, ask for a review" link. One click sends the customer a Google-review request. |
 | `outreach/` | Demo-first cold email sequence, Loom script, pricing, objection handling, and a tracker CSV. |
@@ -30,8 +30,9 @@ Sources: [BLS/CB Insights roundup](https://www.demandsage.com/?p=7938), [indie r
 No dependencies; requires Node 20+.
 
 ```bash
-# 1. Find leads: make a CSV (name,website,city) from Google Maps for one niche + one city
-npm run prospect -- my-businesses.csv --psi        # writes leads.csv
+# 1. Find leads (official Google Places API, see GUIDE.md §1 for the free key), then rank them
+npm run find-leads -- --query "plumber in Austin, TX" --niche plumber --pages 3
+npm run prospect -- my-leads.csv --psi            # writes leads.csv, worst websites first
 
 # 2. Create demos for the top leads (fill in agency.json first), tweak each clients/<id>.json, then build
 npm run new-client -- --from-leads leads.csv --top 10
