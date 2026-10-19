@@ -47,16 +47,68 @@ Follow this top to bottom. Each step says **what to do**, **which file or comman
 
 ---
 
-## 1. Find leads (about 1 hour per 50 leads)
+## 1. Find leads (about 10 minutes per 50–60 leads)
 
-1. Pick **one niche + one metro area**, e.g. plumbers in Austin. Good niches: plumbers, HVAC, roofers, electricians, dentists, physios. One niche lets you reuse the demo and the pitch.
-2. Open Google Maps and search "plumber Austin TX". For each business, copy **name, website, city, phone** into a sheet. Add `niche` = plumber.
-3. Look for these signs of a good lead:
-   - **no website** (best)
-   - an old, slow or non-mobile site
-   - good reviews but a weak site. They do good work and lose online leads, so they're the easiest sell.
-4. Save the sheet as `my-leads.csv` with columns `name,website,city,phone,niche`.
-5. `npm run prospect -- my-leads.csv --psi`. This writes `leads.csv` with the worst sites first and the reasons why.
+Pick **one niche + one metro area**, e.g. plumbers in Austin. Good niches: plumbers, HVAC, roofers, electricians, dentists, physios. One niche lets you reuse the demo and the pitch.
+
+### Automatic: Google Places API (recommended)
+One-time setup (about 15 minutes, free within Google's monthly free allowance):
+1. Go to [console.cloud.google.com](https://console.cloud.google.com) → create a project, e.g. "lead-finder".
+2. Add a billing account. Google requires a card even for the free tier.
+3. **APIs & Services → Library →** enable **"Places API (New)"**.
+4. **APIs & Services → Credentials → Create credentials → API key.** Click the key → **Restrict key** → API restrictions → allow only *Places API (New)*.
+5. **Protect yourself from charges:**
+   - **Billing → Budgets & alerts →** create a $1 budget with email alerts.
+   - **APIs & Services → Places API (New) → Quotas →** cap requests per day at about 30.
+
+   Each request returns up to 20 businesses. The free allowance is about 1,000 of these requests a month (at the time of writing; check Google's pricing page).
+
+Then, each time:
+```bash
+# Mac/Linux
+export GOOGLE_PLACES_API_KEY="your-key"
+# Windows PowerShell
+$env:GOOGLE_PLACES_API_KEY="your-key"
+
+npm run find-leads -- --query "plumber in Austin, TX" --niche plumber --pages 3
+npm run find-leads -- --query "plumber in Round Rock, TX" --niche plumber --pages 3   # appends, skips duplicates
+npm run prospect -- my-leads.csv --psi
+```
+- `--pages 3` returns up to 60 businesses.
+- Re-running adds only new businesses to `my-leads.csv`.
+- The file also records each business's Google rating and review count. **A high rating with many reviews plus no or weak website** is your best kind of lead.
+
+Two things to know:
+- **Never put the key in a file in this repo.** Set it in your terminal as shown above.
+- Google's terms limit how long you may keep Places data. Use each list for current outreach, and delete old `my-leads*.csv` files instead of building a permanent database. These files are git-ignored, so they never get pushed.
+
+### Free, no API key: OpenStreetMap
+```bash
+npm run osm-leads -- --city "Leeds, UK" --niche plumber
+npm run osm-leads -- --city "Bradford, UK" --niche plumber     # appends, skips duplicates
+```
+- **Supported niches:** plumber, hvac, roofer, electrician, dentist, physio, painter, carpenter, locksmith, gardener, vet, hairdresser, beauty, car_repair, lawyer, accountant.
+- **No key, no signup, no monthly quota.** The data is open (credit: © OpenStreetMap contributors).
+- **Coverage varies:** usually good in the UK and Europe, patchier in the US. Run both finders on the same `my-leads.csv` for the most complete list.
+- **It's a free community service:** run a handful of searches a day, not hundreds. If you get a "busy" error, wait a minute.
+
+### Find emails automatically
+```bash
+npm run find-emails -- my-leads.csv
+```
+This visits each business's own website (the homepage plus /contact and /about pages) and fills in the `email` column. Addresses on the business's own domain are preferred, e.g. info@joesplumbing.com. Businesses with no website have no email to find, but they're your best leads, so call them.
+
+### Manual (no Google account needed)
+Search Google Maps for "plumber Austin TX". Copy each business's **name, website, city, phone** into a sheet, with a `niche` column, and save it as `my-leads.csv`. Then run `npm run prospect -- my-leads.csv --psi`.
+
+### What a good lead looks like
+- **No website.** This is the best kind of lead.
+- An old, slow or non-mobile site.
+- Good reviews but a weak site. They do good work and lose online leads, so they're the easiest sell.
+
+`npm run prospect` writes `leads.csv` with the worst sites first and the reasons why.
+
+**Email addresses:** Google doesn't provide them. Run `npm run find-emails`, check their Facebook page, or just **call**. Calling a trades business directly often works better than email anyway.
 
 **Done when:** you have 50–100 rows in `leads.csv`.
 
