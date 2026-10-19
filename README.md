@@ -32,6 +32,8 @@ No dependencies; requires Node 20+.
 ```bash
 # 1. Find leads (official Google Places API, see GUIDE.md §1 for the free key), then rank them
 npm run find-leads -- --query "plumber in Austin, TX" --niche plumber --pages 3
+npm run osm-leads -- --city "Leeds, UK" --niche plumber   # free alternative, no key (OpenStreetMap)
+npm run find-emails -- my-leads.csv                       # fills in emails from each business's website
 npm run prospect -- my-leads.csv --psi            # writes leads.csv, worst websites first
 
 # 2. Create demos for the top leads (fill in agency.json first), tweak each clients/<id>.json, then build

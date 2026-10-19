@@ -9,6 +9,8 @@
   },
   "scripts": {
     "find-leads": "node prospector/find-leads.mjs",
+    "osm-leads": "node prospector/osm-leads.mjs",
+    "find-emails": "node prospector/find-emails.mjs",
     "prospect": "node prospector/index.mjs",
     "gen": "node site-template/gen.mjs",
     "lead-api:dev": "node lead-api/dev-server.mjs",

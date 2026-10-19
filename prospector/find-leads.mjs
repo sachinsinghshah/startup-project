@@ -36,7 +36,9 @@ try { existing = parseCsv(await readFile(o.out, 'utf8')); } catch { /* new file 
 const seen = new Set(existing.map(r => r.place_id || `${r.name}|${r.phone}`));
 const added = found.filter(r => !seen.has(r.place_id) && !seen.has(`${r.name}|${r.phone}`));
 
-await writeFile(o.out, toCsv([...existing, ...added], COLUMNS));
+// Keep any columns already in the file (e.g. email from find-emails, osm_id from osm-leads).
+const columns = [...new Set([...COLUMNS, ...existing.flatMap(r => Object.keys(r))])];
+await writeFile(o.out, toCsv([...existing, ...added], columns));
 const noSite = added.filter(r => !r.website).length;
 console.log(`Found ${found.length}, added ${added.length} new (${noSite} with no website) → ${o.out} (${existing.length + added.length} total)`);
 console.log(`Next: npm run prospect -- ${o.out} --psi`);

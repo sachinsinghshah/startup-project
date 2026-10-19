@@ -82,6 +82,22 @@ Two things to know:
 - **Never put the key in a file in this repo.** Set it in your terminal as shown above.
 - Google's terms limit how long you may keep Places data. Use each list for current outreach, and delete old `my-leads*.csv` files instead of building a permanent database. These files are git-ignored, so they never get pushed.
 
+### Free, no API key: OpenStreetMap
+```bash
+npm run osm-leads -- --city "Leeds, UK" --niche plumber
+npm run osm-leads -- --city "Bradford, UK" --niche plumber     # appends, skips duplicates
+```
+- **Supported niches:** plumber, hvac, roofer, electrician, dentist, physio, painter, carpenter, locksmith, gardener, vet, hairdresser, beauty, car_repair, lawyer, accountant.
+- **No key, no signup, no monthly quota.** The data is open (credit: © OpenStreetMap contributors).
+- **Coverage varies:** usually good in the UK and Europe, patchier in the US. Run both finders on the same `my-leads.csv` for the most complete list.
+- **It's a free community service:** run a handful of searches a day, not hundreds. If you get a "busy" error, wait a minute.
+
+### Find emails automatically
+```bash
+npm run find-emails -- my-leads.csv
+```
+This visits each business's own website (the homepage plus /contact and /about pages) and fills in the `email` column. Addresses on the business's own domain are preferred, e.g. info@joesplumbing.com. Businesses with no website have no email to find, but they're your best leads, so call them.
+
 ### Manual (no Google account needed)
 Search Google Maps for "plumber Austin TX". Copy each business's **name, website, city, phone** into a sheet, with a `niche` column, and save it as `my-leads.csv`. Then run `npm run prospect -- my-leads.csv --psi`.
 
@@ -92,7 +108,7 @@ Search Google Maps for "plumber Austin TX". Copy each business's **name, website
 
 `npm run prospect` writes `leads.csv` with the worst sites first and the reasons why.
 
-**Email addresses:** Google doesn't provide them. Find them on the business's website "Contact" page or their Facebook page, or just **call**. Calling a trades business directly often works better than email anyway.
+**Email addresses:** Google doesn't provide them. Run `npm run find-emails`, check their Facebook page, or just **call**. Calling a trades business directly often works better than email anyway.
 
 **Done when:** you have 50–100 rows in `leads.csv`.
 
